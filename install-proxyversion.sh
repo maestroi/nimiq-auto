@@ -55,7 +55,7 @@ if [[ $DISTRO == *"ubuntu"* ]] || [[ $DISTRO == *"Ubuntu"* ]]; then
     cd ~
     touch start-miner.sh
     echo "cd ~/core/clients/nodejs/" > start-miner.sh
-    echo "UV_THREADPOOL_SIZE=$THREAD screen -dmS NIMIQ-MINER node index.js --host $DOMAIN --port 8080 --key /etc/letsencrypt/live/$DOMAIN/privkey.pem --cert /etc/letsencrypt/live/$DOMAIN/fullchain.pem --miner=$THREAD --wallet-seed=$SEED" >> start-miner.sh
+    echo "UV_THREADPOOL_SIZE=$THREAD screen -dmS NIMIQ-MINER node index.js --host $DOMAIN --port 8080 --miner=$THREAD --wallet-seed=$SEED" >> start-miner.sh
     chmod 755 start-miner.sh
      
      
