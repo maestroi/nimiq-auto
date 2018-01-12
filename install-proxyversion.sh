@@ -34,10 +34,14 @@ if [[ $DISTRO == *"ubuntu"* ]] || [[ $DISTRO == *"Ubuntu"* ]]; then
     apt-get -y update
     apt-get -y install screen
     apt-get -y update
-    apt-get -y install certbot
+    mkdir /etc/$DOMAIN/ssl
+    # mkdir /etc/ssl/ssl
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/$DOMAIN/ssl/private.key -out /etc/$DOMAIN/ssl/public.crt
+    #openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/ssl/private.key -out /etc/ssl/ssl/public.crt
     curl -sL https://deb.nodesource.com/setup_9.x -o nodesource_setup.sh
     bash nodesource_setup.sh
     apt-get -y install nodejs build-essential git
+
     cd ~
     git clone https://github.com/nimiq-network/core
     cd core
@@ -55,7 +59,8 @@ if [[ $DISTRO == *"ubuntu"* ]] || [[ $DISTRO == *"Ubuntu"* ]]; then
     cd ~
     touch start-miner.sh
     echo "cd ~/core/clients/nodejs/" > start-miner.sh
-    echo "UV_THREADPOOL_SIZE=$THREAD screen -dmS NIMIQ-MINER node index.js --host $DOMAIN --port 8080 --miner=$THREAD --wallet-seed=$SEED" >> start-miner.sh
+
+    echo "UV_THREADPOOL_SIZE=$THREAD screen -dmS NIMIQ-MINER node index.js --host $DOMAIN --port 8080 -key /etc/$DOMAIN/ssl/private.key --cert /etc/$DOMAIN/ssl/public.crt --miner=$THREAD --wallet-seed=$SEED" >> start-miner.sh
     chmod 755 start-miner.sh
      
      
