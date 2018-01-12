@@ -41,7 +41,6 @@ if [[ $DISTRO == *"ubuntu"* ]] || [[ $DISTRO == *"Ubuntu"* ]]; then
     curl -sL https://deb.nodesource.com/setup_9.x -o nodesource_setup.sh
     bash nodesource_setup.sh
     apt-get -y install nodejs build-essential git
-
     cd ~
     git clone https://github.com/nimiq-network/core
     cd core
